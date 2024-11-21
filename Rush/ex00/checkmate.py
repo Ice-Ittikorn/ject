@@ -1,4 +1,5 @@
 def checkmate(board):
+    check_error = True
     def check_Square():
         rows = board.strip().split('\n')
         num_rows = len(rows)
@@ -9,7 +10,10 @@ def checkmate(board):
         if square:
             return num_rows
         else:
-            print("Eror : The board is not a square.")
+            print("Error : The board is not a square.")
+            check_error = False
+            return check_error
+    
     def check_lo() :
         lo_count = {'Q': 0, 'P': 0, 'R': 0,'B':0, 'K':0}
         for char_check in board:
@@ -19,11 +23,17 @@ def checkmate(board):
                 pass
             else :
                 print(f"Error : There are others besides K Q B P R")
+                check_error = False
+                
         if lo_count['K'] == 0:
-            print("Eror : Not is King")
+            print("Error : Not is King")
+            check_error = False
+            
         if lo_count['K'] > 1:
-            print("Eror : King > 1")
-        
+            print("Error : King > 1")
+            check_error = False
+        return check_error
+
     def Position_King():
         for y in range(len(board_list)):
             for x in range(len(board_list[y])):
@@ -135,39 +145,32 @@ def checkmate(board):
 
             return Queen_position_check
 
-
-
         King_posi = Position_King()
         Pawn_posi_check = Pawn_check()
         Bishop_posi_check = Bishop_check()
         Rook_posi_check = Rook_check()
         Queen_posi_check = Queen_check()
 
-        print(f"King_posi : {King_posi}")
-        print(f"Pawn_posi_check : {Pawn_posi_check}")
-        print(f"Rook_posi_check : {Rook_posi_check}")
-        print(f"Bishop_posi_check : {Bishop_posi_check}")
-        print(f"Queen_posi_check : {Queen_posi_check}")
+        list_in_check = Pawn_posi_check + Bishop_posi_check + Rook_posi_check + Queen_posi_check
+        if King_posi in list_in_check :
+            print ("Success")
+        else:
+            print("Fail")
 
 
+    #run
+    check_error = check_Square()
+    check_error = check_lo()
 
-    
-    check_Square()
-    check_lo()
     # position ตาราง เป็นลิส 
     board_list = []
     for row in board.split('\n'):
         if row:
             board_list.append(list(row))
-
-    Position_King()
-    Position_Pawn()
-    Position_Bishop()
-    Position_Rook()
-    Position_Queen()
-    check()
-
-
-   
-
-
+    if check_error == True :
+        Position_King()
+        Position_Pawn()
+        Position_Bishop()
+        Position_Rook()
+        Position_Queen()
+        check()
