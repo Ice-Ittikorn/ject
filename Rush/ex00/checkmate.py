@@ -7,7 +7,7 @@ def checkmate(board):
             if len(row) != num_rows:
                 square = False
         if square:
-            pass
+            return num_rows
         else:
             print("Eror : The board is not a square.")
 
@@ -57,7 +57,6 @@ def checkmate(board):
             for x in range(len(board_list[y])):
                 if board_list[y][x] == 'R':
                     rook_positions.append((x + 1, y + 1))
-        print(f"Positions Rook: {rook_positions}")
         return rook_positions
  
     def Position_Queen():
@@ -73,50 +72,51 @@ def checkmate(board):
 
     def check():
         King_location = Position_King()
-        In_check = False
         def Pawn_check():
-            In_check = False
             pawn_positions = Position_Pawn()
             pawn_positions_check = []
             for position in pawn_positions:
                 pawn_positions_check.append((position[0] - 1, position[1] - 1))
                 pawn_positions_check.append((position[0] + 1, position[1] - 1))
-            if King_location in pawn_positions_check:
-                In_check = True
-            else :
-                In_check = False
-            return In_check
-        In_check = Pawn_check()
-
+            return pawn_positions_check
 
         def Bishop_check():
             pass
-        def Rook_check():
-            In_check = False
-            Rook_positions = Position_Rook()
-            pawn_positions_check = []
-            for position in Rook_positions:
-                Rook_positions.append((position[0] - 1, position[1] - 1))
-                Rook_positions.append((position[0] + 1, position[1] - 1))
-            if King_location in Rook_positions:
-                In_check = True
-            else :
-                In_check = False
-            return In_check
-        In_check = Rook_check()
 
+        def Rook_check():
+            board_size = check_Square()
+            Rook_positions = Position_Rook()
+            Rook_position_check = []
+
+            for position in Rook_positions:
+                Rook_position_check = []
+                x, y = position
+
+                for posi in range(1, board_size + 1):
+                    if posi != y:
+                        Rook_position_check.append((x, posi))
+
+                for posi in range(1, board_size + 1):
+                    if posi != x:
+                        Rook_position_check.append((posi, y))
+            return Rook_position_check
 
         def Queen_check():
             pass
+
         Pawn_check()
         Bishop_check()
         Rook_check()
         Queen_check()
 
-        if In_check == True:
-            print("Success")
-        elif In_check == False:
-            print("Fail")
+        King_posi = Position_King()
+        Pawn_posi_check = Pawn_check()
+        Rook_posi_check = Rook_check()
+
+        print(f"King_posi : {King_posi}")
+        print(f"Pawn_posi_check : {Pawn_posi_check}")
+        print(f"Rook_posi_check : {Rook_posi_check}")
+
 
     
     check_Square()
@@ -126,6 +126,7 @@ def checkmate(board):
     for row in board.split('\n'):
         if row:
             board_list.append(list(row))
+
     Position_King()
     Position_Pawn()
     Position_Bishop()
