@@ -44,7 +44,6 @@ def checkmate(board):
             for x in range(len(board_list[y])):
                 if board_list[y][x] == 'B':
                     bishop_positions.append((x + 1, y + 1))
-        print(f"Positions Bishop: {bishop_positions}")
         return bishop_positions
     def Position_Rook():
         rook_positions = []
@@ -59,10 +58,7 @@ def checkmate(board):
             for x in range(len(board_list[y])):
                 if board_list[y][x] == 'Q':
                     queen_positions.append((x + 1, y + 1))
-        print(f"Positions Queen: {queen_positions}")
         return queen_positions
-
-       
 
     def check():
         King_location = Position_King()
@@ -77,24 +73,22 @@ def checkmate(board):
         def Bishop_check():
             board_size = check_Square()
             Bishop_positions = Position_Bishop()
-            Bishop_position_check = {}
+            Bishop_position_check = []
 
             for position in Bishop_positions:
-                moves = []
                 x, y = position
 
                 # ตรวจสอบการเดินในแนวทแยงมุมทั้ง 4 ทิศทาง
                 for i in range(1, board_size + 1):
                     if x + i <= board_size and y + i <= board_size:
-                        moves.append((x + i, y + i))
+                        Bishop_position_check.append((x + i, y + i))
                     if x - i > 0 and y + i <= board_size:
-                        moves.append((x - i, y + i))
+                        Bishop_position_check.append((x - i, y + i))
                     if x + i <= board_size and y - i > 0:
-                        moves.append((x + i, y - i))
+                        Bishop_position_check.append((x + i, y - i))
                     if x - i > 0 and y - i > 0:
-                        moves.append((x - i, y - i))
+                        Bishop_position_check.append((x - i, y - i))
 
-                Bishop_position_check[position] = moves
             return Bishop_position_check
 
         def Rook_check():
@@ -103,7 +97,6 @@ def checkmate(board):
             Rook_position_check = []
 
             for position in Rook_positions:
-                Rook_position_check = []
                 x, y = position
 
                 for posi in range(1, board_size + 1):
@@ -116,22 +109,45 @@ def checkmate(board):
             return Rook_position_check
 
         def Queen_check():
-            pass
+            board_size = check_Square()
+            Queen_positions = Position_Queen()
+            Queen_position_check = []
+            for position in Queen_positions:
+                x, y = position
+                for i in range(1, board_size + 1):
+                    if x + i <= board_size and y + i <= board_size:
+                        Queen_position_check.append((x + i, y + i))
+                    if x - i > 0 and y + i <= board_size:
+                        Queen_position_check.append((x - i, y + i))
+                    if x + i <= board_size and y - i > 0:
+                        Queen_position_check.append((x + i, y - i))
+                    if x - i > 0 and y - i > 0:
+                        Queen_position_check.append((x - i, y - i))
 
-        Pawn_check()
-        Bishop_check()
-        Rook_check()
-        Queen_check()
+            for position in Queen_positions:
+                x, y = position
+                for posi in range(1, board_size + 1):
+                    if posi != y:
+                        Queen_position_check.append((x, posi))
+                for posi in range(1, board_size + 1):
+                    if posi != x:
+                        Queen_position_check.append((posi, y))
+
+            return Queen_position_check
+
+
 
         King_posi = Position_King()
         Pawn_posi_check = Pawn_check()
         Bishop_posi_check = Bishop_check()
         Rook_posi_check = Rook_check()
+        Queen_posi_check = Queen_check()
 
         print(f"King_posi : {King_posi}")
         print(f"Pawn_posi_check : {Pawn_posi_check}")
         print(f"Rook_posi_check : {Rook_posi_check}")
         print(f"Bishop_posi_check : {Bishop_posi_check}")
+        print(f"Queen_posi_check : {Queen_posi_check}")
 
 
 
