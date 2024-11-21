@@ -103,7 +103,7 @@ def checkmate(board):
             else :
                 In_check = False
             return In_check
-        In_check = Pawn_check()
+        In_check = Rook_check()
 
 
         def Queen_check():
