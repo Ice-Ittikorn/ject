@@ -10,7 +10,6 @@ def checkmate(board):
             return num_rows
         else:
             print("Eror : The board is not a square.")
-
     def check_lo() :
         lo_count = {'Q': 0, 'P': 0, 'R': 0,'B':0, 'K':0}
         for char_check in board:
@@ -32,7 +31,6 @@ def checkmate(board):
                     king_pos = (x + 1, y + 1)
                     break   
         return king_pos      
-
     def Position_Pawn():
         pawn_positions = []
         for y in range(len(board_list)):
@@ -40,8 +38,6 @@ def checkmate(board):
                 if board_list[y][x] == 'P':
                     pawn_positions.append((x+1, y+1 ))
         return pawn_positions
-
-
     def Position_Bishop():
         bishop_positions = []
         for y in range(len(board_list)):
@@ -50,7 +46,6 @@ def checkmate(board):
                     bishop_positions.append((x + 1, y + 1))
         print(f"Positions Bishop: {bishop_positions}")
         return bishop_positions
-
     def Position_Rook():
         rook_positions = []
         for y in range(len(board_list)):
@@ -58,7 +53,6 @@ def checkmate(board):
                 if board_list[y][x] == 'R':
                     rook_positions.append((x + 1, y + 1))
         return rook_positions
- 
     def Position_Queen():
         queen_positions = []
         for y in range(len(board_list)):
@@ -81,7 +75,27 @@ def checkmate(board):
             return pawn_positions_check
 
         def Bishop_check():
-            pass
+            board_size = check_Square()
+            Bishop_positions = Position_Bishop()
+            Bishop_position_check = {}
+
+            for position in Bishop_positions:
+                moves = []
+                x, y = position
+
+                # ตรวจสอบการเดินในแนวทแยงมุมทั้ง 4 ทิศทาง
+                for i in range(1, board_size + 1):
+                    if x + i <= board_size and y + i <= board_size:
+                        moves.append((x + i, y + i))
+                    if x - i > 0 and y + i <= board_size:
+                        moves.append((x - i, y + i))
+                    if x + i <= board_size and y - i > 0:
+                        moves.append((x + i, y - i))
+                    if x - i > 0 and y - i > 0:
+                        moves.append((x - i, y - i))
+
+                Bishop_position_check[position] = moves
+            return Bishop_position_check
 
         def Rook_check():
             board_size = check_Square()
@@ -111,11 +125,14 @@ def checkmate(board):
 
         King_posi = Position_King()
         Pawn_posi_check = Pawn_check()
+        Bishop_posi_check = Bishop_check()
         Rook_posi_check = Rook_check()
 
         print(f"King_posi : {King_posi}")
         print(f"Pawn_posi_check : {Pawn_posi_check}")
         print(f"Rook_posi_check : {Rook_posi_check}")
+        print(f"Bishop_posi_check : {Bishop_posi_check}")
+
 
 
     
