@@ -12,70 +12,111 @@ def checkmate(board):
             print("Eror : The board is not a square.")
 
     def check_lo() :
-        lo_count = {'Q': 0, 'P': 0, 'R': 0,'K':0}
+        lo_count = {'Q': 0, 'P': 0, 'R': 0,'B':0, 'K':0}
         for char_check in board:
-            if char_check in {'Q', 'P','R','K'}:
+            if char_check in {'Q', 'P','R','B','K'}:
                 lo_count[char_check] += 1 
             elif char_check in {'.','\n'} :
                 pass
             else :
-                print(f"Error : There are others besides K Q P R")
+                print(f"Error : There are others besides K Q B P R")
         if lo_count['K'] == 0:
             print("Eror : Not is King")
         if lo_count['K'] > 1:
             print("Eror : King > 1")
 
     def position():
-        #position ตาราง เป็นลิส 
+        # position ตาราง เป็นลิส 
         board_list = []
         for row in board.split('\n'):
             if row:
                 board_list.append(list(row))
 
         def Position_King():
-            for i in range(len(board_list)):
-                for j in range(len(board_list[i])):
-                    if board_list[i][j] == 'K':
-                        king_pos = (i+1, j+1)
+            for y in range(len(board_list)):
+                for x in range(len(board_list[y])):
+                    if board_list[y][x] == 'K':
+                        king_pos = (x + 1, y + 1)
                         print(f"position king : {king_pos}")
                         break         
+
         def Position_Pawn():
-            for i in range(len(board_list)):
-                for j in range(len(board_list[i])):
-                    if board_list[i][j] == 'P':
-                        Pawn_pos = (i+1, j+1)
-                        print(f"position Pawn : {Pawn_pos}")
-                        break
+            pawn_positions = []
+            for y in range(len(board_list)):
+                for x in range(len(board_list[y])):
+                    if board_list[y][x] == 'P':
+                        pawn_positions.append((x + 1, y + 1))
+            print(f"Positions Pawn: {pawn_positions}")
+
         def Position_Bishop():
-            for i in range(len(board_list)):
-                for j in range(len(board_list[i])):
-                    if board_list[i][j] == 'B':
-                        Bishop_pos = (i+1, j+1)
-                        print(f"position Pawn : {Bishop_pos}")
-                        break
+            bishop_positions = []
+            for y in range(len(board_list)):
+                for x in range(len(board_list[y])):
+                    if board_list[y][x] == 'B':
+                        bishop_positions.append((x + 1, y + 1))
+            print(f"Positions Bishop: {bishop_positions}")
+
         def Position_Rook():
-            for i in range(len(board_list)):
-                for j in range(len(board_list[i])):
-                    if board_list[i][j] == 'R':
-                        Rook_pos = (i+1, j+1)
-                        print(f"position Rook : {Rook_pos}")
-                        break
+            rook_positions = []
+            for y in range(len(board_list)):
+                for x in range(len(board_list[y])):
+                    if board_list[y][x] == 'R':
+                        rook_positions.append((x + 1, y + 1))
+            print(f"Positions Rook: {rook_positions}")
+
         def Position_Queen():
-            for i in range(len(board_list)):
-                for j in range(len(board_list[i])):
-                    if board_list[i][j] == 'Q':
-                        Queen_pos = (i+1, j+1)
-                        print(f"position Queen : {Queen_pos}")
-                        break
+            queen_positions = []
+            for y in range(len(board_list)):
+                for x in range(len(board_list[y])):
+                    if board_list[y][x] == 'Q':
+                        queen_positions.append((x + 1, y + 1))
+            print(f"Positions Queen: {queen_positions}")
+
         Position_King()
         Position_Pawn()
         Position_Bishop()
         Position_Rook()
         Position_Queen()
 
+    def check_location():
+        def Pawn_check():
+            board_list = []
+            for i in board.split('\n'):
+                if i:
+                    board_list.append(list(i))
+                        possible_moves = [
+                (x, y - 1) for y in range(len(board_list)) for x in range(len(board_list[y]))
+                if board_list[y][x] == 'P' and 0 <= x < len(board_list[0]) and 0 <= y - 1 < len(board_list)
+            ] + [
+                (x - 1, y - 1) for y in range(len(board_list)) for x in range(len(board_list[y]))
+                if board_list[y][x] == 'P' and 0 <= x - 1 < len(board_list[0]) and 0 <= y - 1 < len(board_list)
+            ] + [
+                (x + 1, y - 1) for y in range(len(board_list)) for x in range(len(board_list[y]))
+                if board_list[y][x] == 'P' and 0 <= x + 1 < len(board_list[0]) and 0 <= y - 1 < len(board_list)
+            ]
+            print(f"Possible moves for Pawns: {possible_moves}")
+
+
+
+
+
+
+
+        def Bishop_check():
+            pass
+        def Rook_check():
+            pass
+        def Queen_check():
+            pass
+        Pawn_check()
+        Bishop_check()
+        Rook_check()
+        Queen_check()
+    
     check_Square()
     check_lo()
     position()
+    check_location()
 
    
 
