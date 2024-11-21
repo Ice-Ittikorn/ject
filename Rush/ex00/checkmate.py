@@ -1,5 +1,4 @@
 def checkmate(board):
-    check_error = True
     def check_Square():
         rows = board.strip().split('\n')
         num_rows = len(rows)
@@ -15,6 +14,7 @@ def checkmate(board):
             return check_error
     
     def check_lo() :
+        check_error = True
         lo_count = {'Q': 0, 'P': 0, 'R': 0,'B':0, 'K':0}
         for char_check in board:
             if char_check in {'Q', 'P','R','B','K'}:
