@@ -24,83 +24,115 @@ def checkmate(board):
             print("Eror : Not is King")
         if lo_count['K'] > 1:
             print("Eror : King > 1")
+        
+    def Position_King():
+        for y in range(len(board_list)):
+            for x in range(len(board_list[y])):
+                if board_list[y][x] == 'K':
+                    king_pos = (x + 1, y + 1)
+                    break   
+        return king_pos      
 
-    def position():
-        # position ตาราง เป็นลิส 
-        board_list = []
-        for row in board.split('\n'):
-            if row:
-                board_list.append(list(row))
+    def Position_Pawn():
+        pawn_positions = []
+        for y in range(len(board_list)):
+            for x in range(len(board_list[y])):
+                if board_list[y][x] == 'P':
+                    pawn_positions.append((x+1, y+1 ))
+        return pawn_positions
 
-        def Position_King():
-            for y in range(len(board_list)):
-                for x in range(len(board_list[y])):
-                    if board_list[y][x] == 'K':
-                        king_pos = (x + 1, y + 1)
-                        print(f"position king : {king_pos}")
-                        break         
 
-        def Position_Pawn():
-            pawn_positions = []
-            for y in range(len(board_list)):
-                for x in range(len(board_list[y])):
-                    if board_list[y][x] == 'P':
-                        pawn_positions.append((x + 1, y + 1))
-            print(f"Positions Pawn: {pawn_positions}")
+    def Position_Bishop():
+        bishop_positions = []
+        for y in range(len(board_list)):
+            for x in range(len(board_list[y])):
+                if board_list[y][x] == 'B':
+                    bishop_positions.append((x + 1, y + 1))
+        print(f"Positions Bishop: {bishop_positions}")
+        return bishop_positions
 
-        def Position_Bishop():
-            bishop_positions = []
-            for y in range(len(board_list)):
-                for x in range(len(board_list[y])):
-                    if board_list[y][x] == 'B':
-                        bishop_positions.append((x + 1, y + 1))
-            print(f"Positions Bishop: {bishop_positions}")
+    def Position_Rook():
+        rook_positions = []
+        for y in range(len(board_list)):
+            for x in range(len(board_list[y])):
+                if board_list[y][x] == 'R':
+                    rook_positions.append((x + 1, y + 1))
+        print(f"Positions Rook: {rook_positions}")
+        return rook_positions
+ 
+    def Position_Queen():
+        queen_positions = []
+        for y in range(len(board_list)):
+            for x in range(len(board_list[y])):
+                if board_list[y][x] == 'Q':
+                    queen_positions.append((x + 1, y + 1))
+        print(f"Positions Queen: {queen_positions}")
+        return queen_positions
 
-        def Position_Rook():
-            rook_positions = []
-            for y in range(len(board_list)):
-                for x in range(len(board_list[y])):
-                    if board_list[y][x] == 'R':
-                        rook_positions.append((x + 1, y + 1))
-            print(f"Positions Rook: {rook_positions}")
+       
 
-        def Position_Queen():
-            queen_positions = []
-            for y in range(len(board_list)):
-                for x in range(len(board_list[y])):
-                    if board_list[y][x] == 'Q':
-                        queen_positions.append((x + 1, y + 1))
-            print(f"Positions Queen: {queen_positions}")
-
-        Position_King()
-        Position_Pawn()
-        Position_Bishop()
-        Position_Rook()
-        Position_Queen()
-
-    def check_location():
+    def check():
+        King_location = Position_King()
+        In_check = False
         def Pawn_check():
-            possible_positions = []
+            In_check = False
+            pawn_positions = Position_Pawn()
+            pawn_positions_check = []
             for position in pawn_positions:
-                possible_positions.append((position[0] - 1, position[1] - 1))
-                possible_positions.append((position[0] - 1, position[1] + 1))
-            print(possible_positions)
+                pawn_positions_check.append((position[0] - 1, position[1] - 1))
+                pawn_positions_check.append((position[0] + 1, position[1] - 1))
+            if King_location in pawn_positions_check:
+                In_check = True
+            else :
+                In_check = False
+            return In_check
+        In_check = Pawn_check()
+
 
         def Bishop_check():
             pass
         def Rook_check():
-            pass
+            In_check = False
+            Rook_positions = Position_Rook()
+            pawn_positions_check = []
+            for position in Rook_positions:
+                Rook_positions.append((position[0] - 1, position[1] - 1))
+                Rook_positions.append((position[0] + 1, position[1] - 1))
+            if King_location in Rook_positions:
+                In_check = True
+            else :
+                In_check = False
+            return In_check
+        In_check = Pawn_check()
+
+
         def Queen_check():
             pass
         Pawn_check()
         Bishop_check()
         Rook_check()
         Queen_check()
+
+        if In_check == True:
+            print("Success")
+        elif In_check == False:
+            print("Fail")
+
     
     check_Square()
     check_lo()
-    position()
-    check_location()
+    # position ตาราง เป็นลิส 
+    board_list = []
+    for row in board.split('\n'):
+        if row:
+            board_list.append(list(row))
+    Position_King()
+    Position_Pawn()
+    Position_Bishop()
+    Position_Rook()
+    Position_Queen()
+    check()
+
 
    
 
