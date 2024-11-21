@@ -3,7 +3,7 @@ def main():
     board = """\
 R..
 .K.
-..
+...
 \
 """
     checkmate(board)
