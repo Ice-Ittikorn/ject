@@ -1,17 +1,18 @@
 def checkmate(board):
     def check_Square():
+        check_error = True
+        square = True
         rows = board.strip().split('\n')
         num_rows = len(rows)
-        square = True
         for row in rows:
             if len(row) != num_rows:
                 square = False
         if square:
-            return num_rows
+            check_error = True
         else:
-            print("Error : The board is not a square.")
+            print("Error: The board is not a square.")
             check_error = False
-            return check_error
+        return check_error  
     
     def check_lo() :
         check_error = True
@@ -81,7 +82,8 @@ def checkmate(board):
             return pawn_positions_check
 
         def Bishop_check():
-            board_size = check_Square()
+            rows = board.strip().split('\n')
+            board_size = len(rows)
             Bishop_positions = Position_Bishop()
             Bishop_position_check = []
 
@@ -102,7 +104,8 @@ def checkmate(board):
             return Bishop_position_check
 
         def Rook_check():
-            board_size = check_Square()
+            rows = board.strip().split('\n')
+            board_size = len(rows)
             Rook_positions = Position_Rook()
             Rook_position_check = []
 
@@ -119,7 +122,8 @@ def checkmate(board):
             return Rook_position_check
 
         def Queen_check():
-            board_size = check_Square()
+            rows = board.strip().split('\n')
+            board_size = len(rows)
             Queen_positions = Position_Queen()
             Queen_position_check = []
             for position in Queen_positions:
@@ -160,14 +164,15 @@ def checkmate(board):
 
     #run
     check_error = check_Square()
-    check_error = check_lo()
+    check_error2 = check_lo()
 
     # position ตาราง เป็นลิส 
     board_list = []
     for row in board.split('\n'):
         if row:
             board_list.append(list(row))
-    if check_error == True :
+
+    if check_error == True and check_error2 == True:
         Position_King()
         Position_Pawn()
         Position_Bishop()
