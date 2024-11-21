@@ -80,27 +80,11 @@ def checkmate(board):
 
     def check_location():
         def Pawn_check():
-            board_list = []
-            for i in board.split('\n'):
-                if i:
-                    board_list.append(list(i))
-                        possible_moves = [
-                (x, y - 1) for y in range(len(board_list)) for x in range(len(board_list[y]))
-                if board_list[y][x] == 'P' and 0 <= x < len(board_list[0]) and 0 <= y - 1 < len(board_list)
-            ] + [
-                (x - 1, y - 1) for y in range(len(board_list)) for x in range(len(board_list[y]))
-                if board_list[y][x] == 'P' and 0 <= x - 1 < len(board_list[0]) and 0 <= y - 1 < len(board_list)
-            ] + [
-                (x + 1, y - 1) for y in range(len(board_list)) for x in range(len(board_list[y]))
-                if board_list[y][x] == 'P' and 0 <= x + 1 < len(board_list[0]) and 0 <= y - 1 < len(board_list)
-            ]
-            print(f"Possible moves for Pawns: {possible_moves}")
-
-
-
-
-
-
+            possible_positions = []
+            for position in pawn_positions:
+                possible_positions.append((position[0] - 1, position[1] - 1))
+                possible_positions.append((position[0] - 1, position[1] + 1))
+            print(possible_positions)
 
         def Bishop_check():
             pass
